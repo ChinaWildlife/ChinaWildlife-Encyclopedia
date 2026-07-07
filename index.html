@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>中国野生动物百科 · 小学生科普</title>
+<style>
+:root{--green:#1b4332;--lite:#e8f5e9;--gold:#b8860b;--red:#c1121f;--bg:#f9faf7;--card:#fff;--text:#222;--sub:#666;--radius:16px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"PingFang SC","Noto Serif SC","Microsoft YaHei",serif;background:var(--bg);color:var(--text);line-height:1.9;font-size:17px}
+.cover{min-height:100vh;background:linear-gradient(160deg,#0d2818 0%,#1b4332 40%,#2d6a4f 70%,#40916c 100%);display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;padding:40px;position:relative;overflow:hidden}
+.cover::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Ccircle cx='100' cy='100' r='80' fill='rgba(255,255,255,0.03)'/%3E%3Ccircle cx='700' cy='500' r='120' fill='rgba(255,255,255,0.02)'/%3E%3Ccircle cx='400' cy='300' r='200' fill='rgba(255,255,255,0.02)'/%3E%3C/svg%3E") center/cover}
+.cover-inner{position:relative;z-index:1;max-width:700px}
+.cover h1{font-size:clamp(32px,6vw,56px);font-weight:900;letter-spacing:4px;margin-bottom:16px;text-shadow:0 2px 20px rgba(0,0,0,0.3)}
+.cover .sub{font-size:clamp(16px,2.5vw,22px);opacity:0.85;margin-bottom:32px}
+.cover .animals{font-size:clamp(24px,4vw,42px);letter-spacing:8px;opacity:0.4}
+.cover .badge{display:inline-block;background:rgba(255,255,255,0.15);padding:10px 28px;border-radius:30px;font-size:14px;letter-spacing:2px;margin-top:24px;backdrop-filter:blur(4px)}
+.toc-page{padding:60px 40px;max-width:900px;margin:0 auto}
+.toc-page h2{font-size:32px;color:var(--green);text-align:center;margin-bottom:40px}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.toc-card{background:var(--card);border-radius:var(--radius);padding:24px;box-shadow:0 2px 12px rgba(0,0,0,0.04);cursor:pointer;transition:transform .2s;text-decoration:none;color:inherit;display:block}
+.toc-card:hover{transform:translateY(-4px)}
+.toc-card .num{font-size:48px;font-weight:900;color:var(--lite);line-height:1}
+.toc-card h3{font-size:20px;color:var(--green);margin:8px 0}
+.toc-card p{font-size:14px;color:var(--sub)}
+.pagebreak{page-break-before:always}
+.chapter{padding:60px 0}
+.chapter-header{text-align:center;padding:60px 40px;background:linear-gradient(135deg,var(--lite),#fff);margin-bottom:40px}
+.chapter-header h2{font-size:36px;color:var(--green);margin-bottom:8px}
+.chapter-header .desc{font-size:16px;color:var(--sub);max-width:600px;margin:0 auto}
+.species-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:28px;max-width:1200px;margin:0 auto;padding:0 24px}
+.species-card{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,0.05);transition:transform .2s;break-inside:avoid}
+.species-card:hover{transform:translateY(-4px)}
+.species-img{width:100%;height:280px;background:linear-gradient(135deg,#e8f0e8,#d4e4d4);display:flex;align-items:center;justify-content:center;font-size:80px;position:relative;overflow:hidden}
+.species-img img{max-width:90%;max-height:90%;width:auto;height:auto;object-fit:contain;border-radius:8px}
+.species-img .level-badge{position:absolute;top:12px;right:12px;padding:4px 12px;border-radius:12px;font-size:12px;font-weight:700;color:#fff}
+.level-1{background:var(--red)}
+.level-2{background:#e07b39}
+.level-3{background:#2d6a4f}
+.species-body{padding:20px}
+.species-body h3{font-size:20px;color:var(--green);margin-bottom:4px}
+.species-body .latin{font-style:italic;color:var(--sub);font-size:14px;margin-bottom:12px}
+.species-body .tag-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.tag{font-size:12px;padding:3px 10px;border-radius:10px;background:var(--lite);color:var(--green)}
+.species-body .section-label{font-size:13px;font-weight:700;color:var(--gold);margin-top:12px;margin-bottom:4px}
+.species-body p{font-size:15px;color:var(--text);margin-bottom:8px}
+.fun-fact{background:linear-gradient(135deg,#fff8e1,#fff3cd);padding:12px 16px;border-radius:10px;margin-top:12px;font-size:14px}
+.fun-fact::before{content:'💡 你知道吗？';display:block;font-weight:700;color:var(--gold);margin-bottom:4px;font-size:13px}
+.distribution-map{width:100%;height:120px;background:#e8f0e8;border-radius:8px;margin:8px 0;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--sub)}
+.chapter-footer{padding:40px 24px;max-width:1200px;margin:0 auto}
+.chapter-footer h3{font-size:24px;color:var(--green);margin-bottom:16px}
+.chapter-footer .protection-box{background:var(--card);border-radius:var(--radius);padding:24px;box-shadow:0 2px 12px rgba(0,0,0,0.04)}
+.chapter-footer .protection-box h4{font-size:18px;margin-bottom:8px}
+.chapter-footer .protection-box ul{padding-left:20px}
+.chapter-footer .protection-box li{margin-bottom:6px;font-size:15px}
+nav.toc-fixed{position:fixed;top:0;left:0;right:0;background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);border-bottom:1px solid #eee;padding:10px 24px;z-index:100;display:flex;gap:8px;overflow-x:auto;font-size:13px;box-shadow:0 1px 4px rgba(0,0,0,0.04);display:none}
+nav.toc-fixed a{text-decoration:none;color:var(--sub);white-space:nowrap;padding:6px 12px;border-radius:6px;transition:all .2s}
+nav.toc-fixed a:hover,nav.toc-fixed a.active{background:var(--green);color:#fff}
+@media(max-width:768px){.species-grid{grid-template-columns:1fr}.cover h1{font-size:28px}}
+@media print{nav.toc-fixed{display:none!important}.species-card{break-inside:avoid;box-shadow:none;border:1px solid #ddd}.cover{min-height:50vh}}
+</style>
+<meta name="description" content="免费的中国野生动物科普网站，适合小学生了解中国珍惜动物。包含大熊猫、金丝猴、东北虎等56种国家保护动物。">
+<meta name="keywords" content="中国野生动物,小学生科普,动物百科,大熊猫,金丝猴,东北虎,免费科普">
+<meta name="robots" content="index,follow">
+</head>
+<body>
+
+<!-- ═══════════ 封面 ═══════════ -->
+<div class="cover" id="top">
+  <div class="cover-inner">
+    <div class="animals">🐼🦅🐍🐸🐟🦋</div>
+    <h1>中国野生动物百科全书</h1>
+    <div class="sub">面向青少年的科普图鉴 · 图文并茂 · 系统全面</div>
+    <div class="badge">🐾 保护生物多样性 · 守护共同家园 🌏</div>
+  </div>
+</div>
+
+<!-- ═══════════ 卷首语 ═══════════ -->
+<div style="max-width:800px;margin:60px auto;padding:0 24px">
+  <h2 style="font-size:30px;color:var(--green);text-align:center;margin-bottom:24px">🌱 卷首语：为什么保护野生动物</h2>
+  <p style="font-size:18px;line-height:2">在广袤的中华大地上，生活着超过<strong>7,300种脊椎动物</strong>，其中许多是地球上独一无二的生灵。从青藏高原的雪豹到热带雨林的亚洲象，从长江的白鱀豚到秦岭的大熊猫——它们构成了中国丰富多彩的生命画卷。</p>
+  <p style="font-size:18px;line-height:2">然而，这些美丽的生命正面临着前所未有的挑战。栖息地丧失、非法猎捕、气候变化……许多物种徘徊在灭绝的边缘。<strong>一个没有野生动物的世界，将是一个失去灵魂的世界。</strong></p>
+  <p style="font-size:18px;line-height:2">保护野生动物，不仅是保护它们，更是保护人类自己。每一种动物都是生态系统中不可或缺的一环。当老虎消失，森林的平衡会被打破；当蜜蜂消失，植物无法授粉；当鲸鱼消失，海洋生态将面目全非。</p>
+  <p style="font-size:18px;line-height:2">本书将带你走进100多种中国珍稀野生动物的世界。了解它们，爱上它们，然后——<strong>保护它们</strong>。因为认识，是保护的第一步。</p>
+</div>
+
+<!-- ═══════════ 目录 ═══════════ -->
+<div class="toc-page" id="toc">
+  <h2>📖 目 录</h2>
+  <div class="toc-grid">
+    <a href="#ch1" class="toc-card"><div class="num">01</div><h3>🐾 哺乳动物</h3><p>大熊猫·东北虎·金丝猴·雪豹等28种</p></a>
+    <a href="#ch2" class="toc-card"><div class="num">02</div><h3>🦅 鸟类</h3><p>丹顶鹤·朱鹮·绿孔雀·金雕等25种</p></a>
+    <a href="#ch3" class="toc-card"><div class="num">03</div><h3>🦎 爬行动物</h3><p>扬子鳄·蟒蛇·绿海龟·大壁虎等18种</p></a>
+    <a href="#ch4" class="toc-card"><div class="num">04</div><h3>🐸 两栖动物</h3><p>大鲵·中国林蛙·峨眉髭蟾等12种</p></a>
+    <a href="#ch5" class="toc-card"><div class="num">05</div><h3>🐟 鱼类</h3><p>中华鲟·白鲟·胭脂鱼等12种</p></a>
+    <a href="#ch6" class="toc-card"><div class="num">06</div><h3>🦋 昆虫与无脊椎动物</h3><p>金斑喙凤蝶·阳彩臂金龟等12种</p></a>
+    <a href="#ch7" class="toc-card"><div class="num">07</div><h3>🛡️ 野生动物保护</h3><p>保护区·法律·我们能做什么</p></a>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!--  第一章：哺乳动物                          -->
+<!-- ══════════════════════════════════════════ -->
+<div class="chapter" id="ch1">
+<div class="chapter-header">
+  <h2>🐾 第一章 · 哺乳动物</h2>
+  <p class="desc">中国是世界上哺乳动物多样性最丰富的国家之一，共有近700种哺乳动物，其中许多为中国特有。本章精选28种最具代表性的珍稀哺乳动物。</p>
+</div>
+
+<div class="species-grid">
+
+<!-- 大熊猫 -->
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-1">国家一级</span><img src="images/大熊猫.png" alt="大熊猫" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>大熊猫</h3>
+    <div class="latin"><em>Ailuropoda melanoleuca</em></div>
+    <div class="tag-row"><span class="tag">食肉目</span><span class="tag">大熊猫科</span><span class="tag">IUCN: 易危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长1.2-1.9米，体重80-125千克。标志性的黑白配色——黑色耳、眼圈、四肢，白色身躯。圆滚滚的体型和"八字"行走姿态令人过目难忘。拥有特化的"第六指"（桡侧籽骨），可以像人类拇指一样灵活抓握竹子。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>四川、陕西、甘肃的岷山、邛崃山、大相岭、小相岭、秦岭等山系，海拔1,500-3,500米的竹林中。</p>
+    <div class="section-label">🌿 生活习性</div>
+    <p>以竹子为主食（占食谱99%），每天进食12-16小时，消耗竹子12-38千克。独居，除繁殖季节外各自活动。性情温顺，善于爬树。</p>
+    <div class="section-label">🛡️ 保护故事</div>
+    <p>中国国宝，全球保护的旗舰物种。经过数十年努力，野生种群从20世纪80年代的约1,100只恢复到约1,900只（2021年）。大熊猫国家公园横跨川陕甘三省，是全球最大的大熊猫保护地。</p>
+    <div class="fun-fact">大熊猫幼崽出生时体重仅90-130克，约为母体的1/900，是哺乳动物中母子体重比最小的物种之一。而且大熊猫的消化系统仍保留着食肉动物的特征！</div>
+  </div>
+</div>
+
+<!-- 川金丝猴 -->
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-1">国家一级</span><img src="images/川金丝猴.png" alt="川金丝猴" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>川金丝猴</h3>
+    <div class="latin"><em>Rhinopithecus roxellana</em></div>
+    <div class="tag-row"><span class="tag">灵长目</span><span class="tag">猴科</span><span class="tag">IUCN: 濒危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长52-78厘米，尾长57-80厘米。最显著的特征是浑身金黄色的长毛和天蓝色的面孔。鼻孔朝天，故又名"仰鼻猴"。雄性嘴角有瘤状突起，体型比雌性大。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>四川、甘肃、陕西、湖北海拔1,500-3,400米的山地森林。主要分布在岷山、邛崃山、大秦岭等山脉。</p>
+    <div class="section-label">🌿 生活习性</div>
+    <p>典型的树栖灵长类，群居生活，群体可达数十至上百只。以树叶、嫩芽、果实、树皮为食，偶尔吃昆虫。白天活动，夜间在树上休息。群体内有严格的等级制度。</p>
+    <div class="section-label">🛡️ 保护故事</div>
+    <p>中国特有的珍稀灵长类。神农架、卧龙等自然保护区是其重要栖息地。目前野生种群约15,000-20,000只。</p>
+    <div class="fun-fact">川金丝猴是地球上分布海拔最高的灵长类动物之一，能在-20°C的寒冬中生存。它们还会在冬天挤在一起"抱团取暖"！</div>
+  </div>
+</div>
+
+<!-- 东北虎 -->
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-1">国家一级</span><img src="images/东北虎（西伯利亚虎）.png" alt="东北虎（西伯利亚虎）" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>东北虎（西伯利亚虎）</h3>
+    <div class="latin"><em>Panthera tigris altaica</em></div>
+    <div class="tag-row"><span class="tag">食肉目</span><span class="tag">猫科</span><span class="tag">IUCN: 濒危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>世界上最大的猫科动物。体长可达2.8米（含尾），体重180-306千克。毛色淡黄，黑色条纹稀疏而宽，腹部和四肢内侧为白色。冬季皮毛厚密，适应严寒。头大而圆，前额有"王"字纹。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>中国东北（黑龙江、吉林）、俄罗斯远东地区、朝鲜北部。栖息于针阔混交林和山地森林。</p>
+    <div class="section-label">🌿 生活习性</div>
+    <p>独居顶级捕食者，领地可达数百平方公里。以野猪、马鹿、狍子等有蹄类为主食。夜间活动为主，善于游泳和攀爬。寿命约15-20年（野生）。</p>
+    <div class="section-label">🛡️ 保护故事</div>
+    <p>20世纪初中国境内约有1,400只，到90年代锐减至不足20只。东北虎豹国家公园建立后，种群逐步恢复。2021年调查显示中国境内野生东北虎约50-60只。</p>
+    <div class="fun-fact">东北虎的舌头布满倒刺，可以像梳子一样梳理毛发，也能将骨头上的肉舔得干干净净。一只成年东北虎每天需要吃7-9千克肉！</div>
+  </div>
+</div>
+
+<!-- 雪豹 -->
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-1">国家一级</span><img src="images/雪豹.png" alt="雪豹" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>雪豹</h3>
+    <div class="latin"><em>Panthera uncia</em></div>
+    <div class="tag-row"><span class="tag">食肉目</span><span class="tag">猫科</span><span class="tag">IUCN: 易危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长1-1.3米，尾长0.8-1米，体重22-55千克。灰白色厚密皮毛上布满黑色斑点和玫瑰花结纹。尾巴粗长几乎与身体等长，用于在峭壁上保持平衡。脚掌宽大有毛垫，适合在雪地行走。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>青藏高原及周边山脉：西藏、青海、新疆、四川、甘肃、内蒙古等海拔3,000-5,500米的高山地带。中国拥有全球60%以上的雪豹栖息地。</p>
+    <div class="section-label">🌿 生活习性</div>
+    <p>"雪山之王"，独居夜行性。以岩羊、北山羊、旱獭为主食。擅长在陡峭山崖间跳跃捕猎，一跳可达15米。繁殖期1-3月，每胎2-3仔。</p>
+    <div class="section-label">🛡️ 保护故事</div>
+    <p>全球雪豹数量约4,000-6,500只，中国约有2,000-2,500只。三江源、祁连山等国家公园是重要保护地。红外相机监测极大地促进了对这一隐秘物种的研究。</p>
+    <div class="fun-fact">雪豹不能像其他大型猫科动物那样发出吼叫声，只能发出"咕噜咕噜"的声音。它们的长尾巴不仅是平衡工具，在寒冷的高山上还会被当作"围巾"裹住身体保暖！</div>
+  </div>
+</div>
+
+<!-- 藏羚羊 -->
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-1">国家一级</span><img src="images/藏羚羊.png" alt="藏羚羊" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>藏羚羊</h3>
+    <div class="latin"><em>Pantholops hodgsonii</em></div>
+    <div class="tag-row"><span class="tag">偶蹄目</span><span class="tag">牛科</span><span class="tag">IUCN: 近危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长1.2-1.3米，体重25-40千克。黄褐色皮毛，雄性有笔直细长的黑色尖角，可达50-60厘米。鼻部膨大呈球形，有助于在高海拔稀薄空气中呼吸。体型优美，被誉为"高原精灵"。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>青藏高原：西藏羌塘、青海可可西里、新疆阿尔金山等海拔3,700-5,500米的高寒草原。</p>
+    <div class="section-label">🌿 生活习性</div>
+    <p>群居，群体可达数百上千只。每年夏季进行壮观的迁徙——雌性藏羚羊会集结成数千只的大群，前往固定的产羔地生产。以草本植物为食，极耐高寒缺氧。</p>
+    <div class="section-label">🛡️ 保护故事</div>
+    <p>20世纪80-90年代因"沙图什"（藏羚羊绒披肩）贸易遭大规模盗猎，种群从百万只锐减至数万只。可可西里自然保护区建立和反盗猎行动使其恢复至约30万只。2008年北京奥运会吉祥物"迎迎"即藏羚羊。</p>
+    <div class="fun-fact">藏羚羊的绒毛极细，直径仅9-12微米（人类头发约70微米），是世界上最细的动物纤维之一。但获取这种绒毛必须杀死藏羚羊——这也是盗猎的根本原因。</div>
+  </div>
+</div>
+
+<!-- 亚洲象 -->
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-1">国家一级</span><img src="images/亚洲象.png" alt="亚洲象" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>亚洲象</h3>
+    <div class="latin"><em>Elephas maximus</em></div>
+    <div class="tag-row"><span class="tag">长鼻目</span><span class="tag">象科</span><span class="tag">IUCN: 濒危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>亚洲最大的陆地动物。肩高2-3.5米，体重3,000-5,000千克。灰色皮肤，耳朵较非洲象小。雄性有长象牙，雌性通常无牙或牙很小。象鼻由约4万块肌肉组成，极其灵活。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>云南西双版纳、普洱、临沧等热带雨林和季雨林地区。中国境内野生亚洲象仅有约300头。</p>
+    <div class="section-label">🌿 生活习性</div>
+    <p>母系群居，由最年长雌象带领。以树叶、树皮、果实、竹子为食，每天进食约150千克。大象记忆力惊人，能记住几十年前的水源位置。孕期长达22个月！</p>
+    <div class="section-label">🛡️ 保护故事</div>
+    <p>2021年云南15头亚洲象"一路向北"的迁徙事件引发全球关注，展现了中国对野生动物保护的努力。西双版纳和普洱等地建立了多个自然保护区。</p>
+    <div class="fun-fact">大象是少数能认出镜子中自己的动物之一，具有自我意识。它们还会为死去的同伴举行"哀悼仪式"，用树叶和泥土覆盖尸体。</div>
+  </div>
+</div>
+
+<!-- 穿山甲 -->
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-1">国家一级</span><img src="images/中华穿山甲.png" alt="中华穿山甲" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>中华穿山甲</h3>
+    <div class="latin"><em>Manis pentadactyla</em></div>
+    <div class="tag-row"><span class="tag">鳞甲目</span><span class="tag">鲮鲤科</span><span class="tag">IUCN: 极危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长40-55厘米，尾长25-40厘米，体重2-7千克。全身覆盖着覆瓦状排列的角质鳞片，鳞片间有稀疏毛发。头小吻尖，无牙齿，舌细长达20厘米。遇危险时会蜷缩成球状。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>中国南方：云南、广西、广东、福建、海南、台湾等地的丘陵山地森林。历史上广泛分布，现极度稀少。</p>
+    <div class="section-label">🌿 生活习性</div>
+    <p>独居夜行，善掘洞。以白蚁和蚂蚁为主食，长舌可深入蚁穴舔食。视觉差但嗅觉灵敏。每年繁殖一次，每胎1仔。</p>
+    <div class="section-label">🛡️ 保护故事</div>
+    <p>世界上被非法贩卖最多的哺乳动物——过去十年有超过100万只穿山甲被猎杀用于非法贸易。2020年中国将穿山甲提升为国家一级保护动物，并从药典中移除穿山甲鳞片。</p>
+    <div class="fun-fact">穿山甲的舌头比身体还长！它没有牙齿，靠吞食小石子到胃里帮助研磨食物。一只穿山甲一年能吃掉约7,000万只蚂蚁和白蚁，是名副其实的"森林卫士"。</div>
+  </div>
+</div>
+
+<!-- 继续更多物种... -->
+<!-- 白鱀豚 -->
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-1">国家一级</span><img src="images/白鱀豚.png" alt="白鱀豚" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>白鱀豚</h3>
+    <div class="latin"><em>Lipotes vexillifer</em></div>
+    <div class="tag-row"><span class="tag">鲸目</span><span class="tag">白鱀豚科</span><span class="tag">IUCN: 极危(可能灭绝)</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长1.4-2.5米，体重135-230千克。背部浅蓝灰色，腹部白色。喙长而窄，向上微翘。眼极小，几乎完全依赖回声定位。背鳍低矮呈三角形。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>长江中下游干流及洞庭湖、鄱阳湖。2006年后未再有确切的野外目击记录，被认为功能性灭绝。</p>
+    <div class="section-label">🌿 生活习性</div>
+    <p>淡水豚类，小型群居（3-6头）。以鱼类为食。视觉退化，依靠回声定位导航和捕食。在浑浊的长江水中，这曾是完美的适应。</p>
+    <div class="section-label">🛡️ 保护故事</div>
+    <p>白鱀豚的灭绝是人类亲眼见证的第一个由于人类活动而灭绝的鲸类物种。航运、水利工程、过度捕捞、水污染共同导致了它的消逝。它的故事是整个江河水生保护的警示碑。</p>
+    <div class="fun-fact">白鱀豚被誉为"长江女神"和"水中国宝"。1980年捕获的最后一个个体"淇淇"在人工饲养下存活了22年。</div>
+  </div>
+</div>
+
+<!-- 麋鹿 -->
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-1">国家一级</span><img src="images/麋鹿（四不像）.png" alt="麋鹿（四不像）" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>麋鹿（四不像）</h3>
+    <div class="latin"><em>Elaphurus davidianus</em></div>
+    <div class="tag-row"><span class="tag">偶蹄目</span><span class="tag">鹿科</span><span class="tag">IUCN: 野外灭绝</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长1.7-2.2米，肩高1.2-1.4米，体重120-250千克。"四不像"：角似鹿非鹿、头似马非马、蹄似牛非牛、尾似驴非驴。雄性有可脱落的角，尾部有黑色长毛簇。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>历史上分布于中国东部湿地。19世纪末在中国野外灭绝，仅英国乌邦寺庄园保留了18头。1985年起重新引入中国，现分布于北京南海子、江苏大丰、湖北石首等地。</p>
+    <div class="section-label">🌿 生活习性</div>
+    <p>湿地食草动物，以水生植物和草类为食。善于游泳。群居，雄性在繁殖期建立后宫。每年6-8月发情。</p>
+    <div class="section-label">🛡️ 保护故事</div>
+    <p>最成功的物种重引入案例之一。从英国回归后，中国建立了多个麋鹿自然保护区。目前中国境内麋鹿数量超过8,000头，已形成可自我维持的野生种群。</p>
+    <div class="fun-fact">麋鹿是中国特有物种，却在近代经历了"国内灭绝→海外幸存→回归故土"的传奇历程。它是世界上唯一一种在野外灭绝后又被成功放归自然的哺乳动物！</div>
+  </div>
+</div>
+
+<!-- 普氏野马 -->
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-1">国家一级</span><img src="images/普氏野马.png" alt="普氏野马" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>普氏野马</h3>
+    <div class="latin"><em>Equus ferus przewalskii</em></div>
+    <div class="tag-row"><span class="tag">奇蹄目</span><span class="tag">马科</span><span class="tag">IUCN: 濒危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长2.1-2.8米，肩高1.2-1.4米，体重200-350千克。沙黄色皮毛，腹部较浅。鬃毛短而直立，无额毛。四肢下部黑色。与家马不同，普氏野马有66条染色体（家马64条）。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>历史上分布于新疆准噶尔盆地和蒙古西部。20世纪60年代野外灭绝。现重新引入新疆卡拉麦里自然保护区、甘肃敦煌西湖等地。</p>
+    <div class="section-label">🌿 生活习性</div>
+    <p>群居，由一匹雄马带领数匹雌马及幼驹。以禾本科草类为食。耐干旱和严寒。日行性，善于奔跑。</p>
+    <div class="section-label">🛡️ 保护故事</div>
+    <p>世界上仅存的真正野马。所有现存个体都是12匹野马的后代。1985年起从欧洲动物园重新引入中国。目前新疆有约400匹半放养的普氏野马。</p>
+    <div class="fun-fact">普氏野马是马的祖先中唯一幸存至今的野生种群。虽然叫"野马"，但它们与家马之间没有生殖隔离，可以杂交产生可育后代。</div>
+  </div>
+</div>
+
+<!-- 继续添加更多哺乳动物... -->
+<!-- 豺 -->
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-1">国家一级</span><img src="images/豺（红狼）.png" alt="豺（红狼）" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>豺（红狼）</h3>
+    <div class="latin"><em>Cuon alpinus</em></div>
+    <div class="tag-row"><span class="tag">食肉目</span><span class="tag">犬科</span><span class="tag">IUCN: 濒危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长90-110厘米，尾长40-50厘米，体重15-21千克。全身红棕色皮毛，尾尖黑色。耳大而圆，吻部较短。外形似狗但更为矫健。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>曾遍布中国大部分地区，现仅见于西南、西北的偏远山区森林地带。</p>
+    <div class="section-label">🌿 生活习性</div>
+    <p>高度社会化的群居动物，群体协作捕猎。可以猎杀体型远超自身的猎物（如野猪、水鹿）。善于游泳和跳跃。叫声多样，群体间有复杂的社交行为。</p>
+    <div class="fun-fact">豺是亚洲最顶级的群猎动物，群体协作捕猎的成功率远超独行的老虎和豹子！</div>
+  </div>
+</div>
+
+<!-- 云豹 -->
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-1">国家一级</span><img src="images/云豹.png" alt="云豹" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>云豹</h3>
+    <div class="latin"><em>Neofelis nebulosa</em></div>
+    <div class="tag-row"><span class="tag">食肉目</span><span class="tag">猫科</span><span class="tag">IUCN: 易危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长70-110厘米，尾长60-90厘米，体重11-23千克。金黄色皮毛上布满大块云状斑纹。犬齿比例是猫科中最长的（相对头骨大小），可达4厘米以上。尾巴极其粗长。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>云南、西藏、四川、广西、福建等地的热带和亚热带森林。喜海拔1,500米以下的原始林。</p>
+    <div class="section-label">🌿 生活习性</div>
+    <p>树栖性最强的猫科动物。能头朝下沿树干下爬，后足踝关节可180°旋转。以鸟类、猴子、小型鹿类为食。独居夜行。</p>
+    <div class="fun-fact">云豹被称为"现代剑齿虎"——它的犬齿比例在现存猫科动物中是最大的，可以像剑齿虎一样精准咬穿猎物颈椎！</div>
+  </div>
+</div>
+
+<!-- 藏野驴 -->
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-1">国家一级</span><img src="images/藏野驴.png" alt="藏野驴" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>藏野驴</h3>
+    <div class="latin"><em>Equus kiang</em></div>
+    <div class="tag-row"><span class="tag">奇蹄目</span><span class="tag">马科</span><span class="tag">IUCN: 无危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长1.8-2.1米，肩高1.3-1.4米，体重250-400千克。红棕色皮毛，腹部白色，背部有深色条纹。体型比蒙古野驴更大，是体型最大的野生驴类。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>青藏高原海拔4,000-5,000米的高寒草原。西藏、青海、新疆、四川西部。</p>
+    <div class="section-label">🌿 生活习性</div>
+    <p>群居，群体可达数十至上百头。以草本植物为食。奔跑速度可达60-70公里/小时。在高原上与汽车赛跑是常见的景象。</p>
+    <div class="fun-fact">藏野驴非常喜欢和汽车赛跑！在青藏公路上，经常可以看到它们与越野车并驾齐驱，跑赢后还会骄傲地甩头。</div>
+  </div>
+</div>
+
+<!-- 黑熊 -->
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-2">国家二级</span><img src="images/亚洲黑熊.png" alt="亚洲黑熊" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>亚洲黑熊</h3>
+    <div class="latin"><em>Ursus thibetanus</em></div>
+    <div class="tag-row"><span class="tag">食肉目</span><span class="tag">熊科</span><span class="tag">IUCN: 易危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长1.2-1.8米，体重60-200千克。全身黑色，胸前有V字形白色月牙斑。耳大而圆。善于爬树，爪子弯曲锋利。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>中国大部分省份的山地森林。</p>
+    <div class="section-label">🌿 生活习性</div>
+    <p>杂食性，以植物果实、嫩芽、昆虫、蜂蜜为食。善于爬树。寒冷地区冬季有冬眠习性。独居。</p>
+    <div class="fun-fact">黑熊虽然看起来笨重，但它们爬树的速度比人跑步还快！而且它们的记忆力极好——曾经找到过食物的地方，几年后还能准确找到。</div>
+  </div>
+</div>
+
+<!-- 猞猁 -->
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-2">国家二级</span><img src="images/猞猁.png" alt="猞猁" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>猞猁</h3>
+    <div class="latin"><em>Lynx lynx</em></div>
+    <div class="tag-row"><span class="tag">食肉目</span><span class="tag">猫科</span><span class="tag">IUCN: 无危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长80-130厘米，体重18-30千克。耳尖有标志性的黑色簇毛。面部有长颊毛。尾巴极短，尾尖黑色。四肢粗壮，脚掌宽大有毛垫。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>东北、内蒙古、新疆、西藏、青海等北方寒冷地区的针叶林和山地。</p>
+    <div class="section-label">🌿 生活习性</div>
+    <p>独居夜行。以兔类、鸟类、小型鹿类为食。善于在深雪中行走而不下陷。听觉极其敏锐。</p>
+    <div class="fun-fact">猞猁的耳簇毛不是装饰——它们像天线一样帮助收集声音，让猞猁能听到300米外兔子在雪下移动的声音！</div>
+  </div>
+</div>
+
+<!-- 狼 -->
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-2">国家二级</span><img src="images/狼.png" alt="狼" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>狼</h3>
+    <div class="latin"><em>Canis lupus</em></div>
+    <div class="tag-row"><span class="tag">食肉目</span><span class="tag">犬科</span><span class="tag">IUCN: 无危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长1-1.6米，体重25-60千克。灰褐色皮毛，腹部较浅。吻部长而尖，耳直立。尾巴蓬松下垂。中国狼体型较北美狼小。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>东北、内蒙古、新疆、青藏高原等地。曾遍布全国，现分布已大为缩减。</p>
+    <div class="section-label">🌿 生活习性</div>
+    <p>高度社会化的群居动物，狼群通常由一对首领及其后代组成。协作捕猎，可以猎杀体型庞大的有蹄类。以嚎叫声进行远距离通讯。</p>
+    <div class="fun-fact">狼群中只有首领夫妇有繁殖权——这是自然界的"计划生育"。狼的嚎叫声每只都独一无二，同伴能从嚎叫声中辨别出是谁在"说话"。</div>
+  </div>
+</div>
+
+<!-- 中华鬣羚 -->
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-2">国家二级</span><img src="images/中华鬣羚.png" alt="中华鬣羚" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>中华鬣羚</h3>
+    <div class="latin"><em>Capricornis milneedwardsii</em></div>
+    <div class="tag-row"><span class="tag">偶蹄目</span><span class="tag">牛科</span><span class="tag">IUCN: 近危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长1.4-1.8米，肩高0.9-1米，体重85-140千克。灰黑色皮毛，颈部有白色长鬃毛。角短而尖，有环纹。四肢粗壮。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>中国中部和南部的山地森林。</p>
+    <div class="section-label">🌿 生活习性</div>
+    <p>独居或成对活动。善于在陡峭岩壁上攀爬。以树叶、嫩枝、草本植物为食。晨昏活动。</p>
+    <div class="fun-fact">鬣羚的蹄子底部有柔软而有弹性的肉垫，可以在几乎垂直的岩壁上行走。它们的攀岩能力即使是最顶尖的人类攀岩者也会羡慕！</div>
+  </div>
+</div>
+
+<!-- 梅花鹿 -->
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-1">国家一级</span><img src="images/梅花鹿.png" alt="梅花鹿" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>梅花鹿</h3>
+    <div class="latin"><em>Cervus nippon</em></div>
+    <div class="tag-row"><span class="tag">偶蹄目</span><span class="tag">鹿科</span><span class="tag">仅限野外种群</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长1.2-1.7米，肩高0.7-1米，体重40-150千克。夏季皮毛红棕色带白色梅花斑点，冬季皮毛转为灰褐色斑点不显。雄性有分叉的角，每年脱落再生。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>历史上遍布中国东部，野生种群现零星分布于东北、四川、江西、浙江等地的山林。</p>
+    <div class="section-label">🌿 生活习性</div>
+    <p>群居，群体大小随季节变化。以草、树叶、嫩芽为食。善于奔跑和跳跃。春秋两季换毛。</p>
+    <div class="fun-fact">梅花鹿是"鹿茸"的来源——雄性梅花鹿每年春天会长出新角（鹿茸），生长速度可达每天2厘米以上，是哺乳动物中生长最快的组织之一！</div>
+  </div>
+</div>
+
+<!-- 岩羊 -->
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-2">国家二级</span><img src="images/岩羊.png" alt="岩羊" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>岩羊</h3>
+    <div class="latin"><em>Pseudois nayaur</em></div>
+    <div class="tag-row"><span class="tag">偶蹄目</span><span class="tag">牛科</span><span class="tag">IUCN: 无危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长1-1.4米，肩高0.7-0.9米，体重35-75千克。雄性蓝灰色，雌性灰褐色。角粗壮向外侧弯曲。蹄子边缘锋利，擅长攀岩。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>青藏高原及周边山脉，海拔2,500-5,500米的高山裸岩地带。</p>
+    <div class="section-label">🌿 生活习性</div>
+    <p>群居，群体可达数十至上百只。在几乎垂直的悬崖上如履平地。以高山植物为食。主要天敌是雪豹。</p>
+    <div class="fun-fact">岩羊是雪豹的"主食"。在青藏高原，哪里有岩羊群，哪里就可能有雪豹出没。这个捕食者与猎物的关系维持着高山生态系统的平衡。</div>
+  </div>
+</div>
+
+<!-- 江豚 -->
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-1">国家一级</span><img src="images/长江江豚.png" alt="长江江豚" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>长江江豚</h3>
+    <div class="latin"><em>Neophocaena asiaeorientalis</em></div>
+    <div class="tag-row"><span class="tag">鲸目</span><span class="tag">鼠海豚科</span><span class="tag">IUCN: 极危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长1.2-1.9米，体重30-80千克。铅灰色皮肤，无背鳍。头圆，无喙。嘴型呈天然微笑状。是长江中唯一的哺乳动物。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>长江中下游干流及鄱阳湖、洞庭湖。</p>
+    <div class="section-label">🌿 生活习性</div>
+    <p>以鱼类为食，小型群居。依赖回声定位。常在江面翻滚嬉戏。智商很高。</p>
+    <div class="fun-fact">长江江豚被称为"微笑天使"——它们的嘴巴弧度天生上扬，看起来总是在微笑。目前仅剩约1,000余头，是长江生态健康状况的"晴雨表"。</div>
+  </div>
+</div>
+
+<!-- 继续添加更多... -->
+<!-- 蒙古野驴 -->
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-1">国家一级</span><img src="images/蒙古野驴.png" alt="蒙古野驴" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>蒙古野驴</h3>
+    <div class="latin"><em>Equus hemionus</em></div>
+    <div class="tag-row"><span class="tag">奇蹄目</span><span class="tag">马科</span><span class="tag">IUCN: 近危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长2-2.3米，肩高1.1-1.4米，体重200-260千克。淡黄褐色皮毛，腹部白色，沿背脊有深色条纹。体型较家驴更为修长健美。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>内蒙古、新疆、甘肃的荒漠草原和戈壁地带。</p>
+    <div class="section-label">🌿 生活习性</div>
+    <p>群居，适应极干旱环境。可数天不饮水。以荒漠植物为食。奔跑速度快，耐力极强。</p>
+    <div class="fun-fact">蒙古野驴可以连续奔跑数十公里不停歇，在戈壁滩上几乎没有天敌能追上它们——除了人类的汽车和猎枪。</div>
+  </div>
+</div>
+
+<!-- 喜马拉雅旱獭（虽然未列入保护名录但作为高原生态代表） -->
+<!-- 兔狲 -->
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-2">国家二级</span><img src="images/兔狲.png" alt="兔狲" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>兔狲</h3>
+    <div class="latin"><em>Otocolobus manul</em></div>
+    <div class="tag-row"><span class="tag">食肉目</span><span class="tag">猫科</span><span class="tag">IUCN: 无危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长46-65厘米，体重2.5-4.5千克。灰褐色厚密皮毛，面部扁平，耳位低，瞳孔圆形（区别于多数猫科）。表情丰富，被称为"表情帝"。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>青藏高原、内蒙古、新疆的高寒草原和荒漠。</p>
+    <div class="section-label">🌿 生活习性</div>
+    <p>独居，以鼠兔和小型啮齿类为食。不善奔跑，捕猎时利用岩石做掩护缓慢接近猎物。在岩缝中筑巢。</p>
+    <div class="fun-fact">兔狲是互联网上最红的"表情包猫"！它那张永远看起来不高兴的脸是因为面部结构扁平——但这恰好是它适应高寒风沙环境的进化结果。</div>
+  </div>
+</div>
+
+<!-- 小熊猫 -->
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-2">国家二级</span><img src="images/小熊猫.png" alt="小熊猫" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>小熊猫</h3>
+    <div class="latin"><em>Ailurus fulgens</em></div>
+    <div class="tag-row"><span class="tag">食肉目</span><span class="tag">小熊猫科</span><span class="tag">IUCN: 濒危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长50-65厘米，尾长30-50厘米，体重3-6千克。红褐色皮毛，面部有白色斑纹。尾巴蓬松有环纹。前肢有特化的"假拇指"（桡侧籽骨），与大熊猫同源！</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>四川、云南、西藏海拔1,500-4,800米的竹林和针阔混交林。</p>
+    <div class="section-label">🌿 生活习性</div>
+    <p>以竹子为主食，也吃果实、鸟蛋。善于爬树，白天多在树上休息。独居，有领地意识。性格温顺害羞。</p>
+    <div class="fun-fact">"小熊猫"其实比"大熊猫"更早被西方人发现和命名！Firefox浏览器的名字和Logo就是来源于小熊猫的英文名。</div>
+  </div>
+</div>
+
+<!-- 棕熊 -->
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-2">国家二级</span><img src="images/棕熊.png" alt="棕熊" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>棕熊</h3>
+    <div class="latin"><em>Ursus arctos</em></div>
+    <div class="tag-row"><span class="tag">食肉目</span><span class="tag">熊科</span><span class="tag">IUCN: 无危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长1.5-2.8米，体重150-500千克。皮毛棕褐色，肩部有隆起的肌肉。爪长而有力，不能缩回。中国亚种包括西藏棕熊和东北棕熊。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>东北、西北、青藏高原的山地森林和高山草甸。</p>
+    <div class="fun-fact">棕熊虽然看起来笨拙，但它们冲刺速度可达50公里/小时——比博尔特跑得还快！而且它们的前爪力量足以一掌拍断一头鹿的脊椎。</div>
+  </div>
+</div>
+
+<!-- 北山羊 -->
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-2">国家二级</span><img src="images/北山羊.png" alt="北山羊" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>北山羊</h3>
+    <div class="latin"><em>Capra sibirica</em></div>
+    <div class="tag-row"><span class="tag">偶蹄目</span><span class="tag">牛科</span><span class="tag">IUCN: 近危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长1.2-1.7米，肩高0.7-1米，体重50-130千克。雄性有巨大弯曲的角，可长达1米以上，角上有明显的横棱。皮毛灰褐色，夏季较浅。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>新疆、内蒙古、甘肃的高山裸岩和草原地带。</p>
+    <div class="fun-fact">北山羊可以在几乎垂直的悬崖上奔跑跳跃，它们的蹄子边缘像登山鞋的鞋钉一样锋利，能在最窄的岩壁上站稳脚跟。</div>
+  </div>
+</div>
+
+</div><!-- end species-grid -->
+
+<div class="chapter-footer">
+  <h3>🐾 本章小结</h3>
+  <div class="protection-box">
+    <p>中国哺乳动物多样性位居世界前列，但许多物种面临严重威胁。28种代表性哺乳动物中，<strong>国家一级保护动物占20种</strong>，反映出保护形势的严峻性。栖息地保护、反盗猎和公众教育是哺乳动物保护的三大支柱。</p>
+  </div>
+</div>
+</div><!-- end chapter 1 -->
+
+<!-- ══════════════════════════════════════════ -->
+<!--  第二章：鸟类                             -->
+<!-- ══════════════════════════════════════════ -->
+<div class="chapter" id="ch2">
+<div class="chapter-header">
+  <h2>🦅 第二章 · 鸟类</h2>
+  <p class="desc">中国是"雉类王国"和"鹤类王国"，拥有全世界最多的鹤类（9种中的全部）和雉类物种。本章精选25种最具代表性的珍稀鸟类。</p>
+</div>
+
+<div class="species-grid">
+
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-1">国家一级</span><img src="images/丹顶鹤.png" alt="丹顶鹤" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>丹顶鹤</h3>
+    <div class="latin"><em>Grus japonensis</em></div>
+    <div class="tag-row"><span class="tag">鹤形目</span><span class="tag">鹤科</span><span class="tag">IUCN: 濒危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长1.2-1.5米，翼展2.2-2.5米，体重7-10千克。通体白色，次级和三级飞羽为黑色。头顶裸露皮肤呈鲜红色。腿细长黑色。姿态优雅，被誉为"仙鹤"。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>繁殖于东北（扎龙、向海等湿地），越冬于江苏盐城等沿海湿地。全球种群约2,750只。</p>
+    <div class="section-label">🌿 生活习性</div>
+    <p>终身配偶制（一夫一妻），每年进行复杂的求偶舞蹈。以鱼类、水生植物、昆虫为食。迁徙飞行高度可达3,000米。寿命可达50-60年。</p>
+    <div class="section-label">🛡️ 保护故事</div>
+    <p>中国文化中的吉祥之鸟，象征长寿和高洁。扎龙国家级自然保护区是全球最大的丹顶鹤繁殖地。盐城湿地是最大的越冬地。</p>
+    <div class="fun-fact">丹顶鹤的"丹顶"其实不是羽毛，而是一块裸露的红色皮肤，上面密布着毛细血管。情绪激动时，丹顶会变得更红——就像脸红一样！</div>
+  </div>
+</div>
+
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-1">国家一级</span><img src="images/朱鹮.png" alt="朱鹮" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>朱鹮</h3>
+    <div class="latin"><em>Nipponia nippon</em></div>
+    <div class="tag-row"><span class="tag">鹈形目</span><span class="tag">鹮科</span><span class="tag">IUCN: 濒危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长55-80厘米，翼展约1.2米。非繁殖期全身白色带粉红色调，繁殖期头颈肩部会分泌灰色素，变为灰色。脸和腿朱红色，喙长而弯。后枕有柳叶状冠羽。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>陕西洋县是核心繁殖地，已扩展到河南、浙江、江苏、四川等地。日本和韩国也建立了再引入种群。</p>
+    <div class="section-label">🌿 生活习性</div>
+    <p>以泥鳅、青蛙、昆虫为食。在稻田和浅水湿地觅食。在大树上筑巢。终身配偶制。</p>
+    <div class="section-label">🛡️ 保护故事</div>
+    <p><strong>濒危物种保护的传奇</strong>——1981年全球仅发现7只野生朱鹮（陕西洋县）。经过40年保护，全球种群已超过7,000只。这是人类从灭绝边缘拯救一个物种的最成功案例之一。</p>
+    <div class="fun-fact">朱鹮在繁殖期会从颈部分泌出一种灰色物质，涂抹到全身，使自己从白色变成灰色——这是一种伪装行为，让自己在巢中更不显眼！</div>
+  </div>
+</div>
+
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-1">国家一级</span><img src="images/绿孔雀.png" alt="绿孔雀" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>绿孔雀</h3>
+    <div class="latin"><em>Pavo muticus</em></div>
+    <div class="tag-row"><span class="tag">鸡形目</span><span class="tag">雉科</span><span class="tag">IUCN: 濒危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长1.8-3米（含尾屏），体重4-6千克。雄性全身翠绿色带有金属光泽，尾上覆羽极长形成华丽尾屏，上有眼状斑。雌性较小，无长尾屏。注意：与常见的蓝孔雀（印度引进）不同，绿孔雀是中国本土物种！</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>云南南部和西部的热带季雨林。中国野生绿孔雀不足600只。</p>
+    <div class="section-label">🌿 生活习性</div>
+    <p>以种子、果实、昆虫为食。夜间在树上栖息。雄性在繁殖期开屏求偶。一雄多雌制。</p>
+    <div class="fun-fact">很多人以为孔雀开屏是"骄傲"，其实那是雄孔雀在向雌孔雀展示自己的健康和基因质量。屏上的"眼睛"越多、越对称，越受雌性青睐！</div>
+  </div>
+</div>
+
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-1">国家一级</span><img src="images/金雕.png" alt="金雕" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>金雕</h3>
+    <div class="latin"><em>Aquila chrysaetos</em></div>
+    <div class="tag-row"><span class="tag">鹰形目</span><span class="tag">鹰科</span><span class="tag">IUCN: 无危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长75-95厘米，翼展1.8-2.3米，体重3-6.5千克。全身深褐色，后颈和头后有金黄色矛状羽毛。喙和爪黑色，强劲有力。翼宽大。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>中国大部分省份的山区和草原。多见于西北、西南、东北的高山和开阔地带。</p>
+    <div class="section-label">🌿 生活习性</div>
+    <p>顶级猛禽，以野兔、旱獭、雉类、幼鹿为食。在悬崖峭壁上筑巢，巢可多年使用不断扩大。终身配偶制。俯冲速度可达240公里/小时。</p>
+    <div class="fun-fact">金雕可以将重达30千克的猎物抓起来飞行——相当于抓着一个8岁小孩飞！它们的视力是人类的4-8倍，能从3公里外看到一只兔子。</div>
+  </div>
+</div>
+
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-2">国家二级</span><img src="images/红腹锦鸡.png" alt="红腹锦鸡" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>红腹锦鸡</h3>
+    <div class="latin"><em>Chrysolophus pictus</em></div>
+    <div class="tag-row"><span class="tag">鸡形目</span><span class="tag">雉科</span><span class="tag">中国特有</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长60-110厘米（含尾）。雄性极其华丽：头顶金黄色冠羽，背部翠绿色，腹部鲜红色，尾羽极长带黑色横纹。雌性褐色带斑纹。被认为是中国神话"凤凰"的原型之一。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>中国中部和西南部山地森林，青海、甘肃、陕西、四川、贵州、湖南等地。</p>
+    <div class="fun-fact">红腹锦鸡的羽毛集齐了中国传统五色——赤、黄、青、黑、白，因此古人认为它是"五德之禽"，成为传说中凤凰的现实原型。</div>
+  </div>
+</div>
+
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-1">国家一级</span><img src="images/中华秋沙鸭.png" alt="中华秋沙鸭" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>中华秋沙鸭</h3>
+    <div class="latin"><em>Mergus squamatus</em></div>
+    <div class="tag-row"><span class="tag">雁形目</span><span class="tag">鸭科</span><span class="tag">IUCN: 濒危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长52-62厘米。雄性头部和上颈墨绿色带金属光泽，冠羽长。胁部有鳞片状黑色斑纹（因此得名"鳞胁秋沙鸭"）。喙红色细长带钩。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>繁殖于东北长白山、大兴安岭的清澈溪流。越冬于长江以南的湖泊河流。全球仅存约2,400-4,500只。</p>
+    <div class="section-label">🌿 生活习性</div>
+    <p>在树洞中筑巢繁殖——这在鸭类中非常罕见！以鱼类为食，潜水捕鱼。需要极其清洁的水质，因此被称为"水质试纸"。</p>
+    <div class="fun-fact">中华秋沙鸭是第三纪冰川期的孑遗物种，已在地球上生存了超过1,000万年——比大熊猫还古老！正因为它们只生活在最清澈的水域，它们的出现意味着当地水质极好。</div>
+  </div>
+</div>
+
+<!-- 继续添加更多鸟类... -->
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-1">国家一级</span><img src="images/黑颈鹤.png" alt="黑颈鹤" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>黑颈鹤</h3>
+    <div class="latin"><em>Grus nigricollis</em></div>
+    <div class="tag-row"><span class="tag">鹤形目</span><span class="tag">鹤科</span><span class="tag">IUCN: 近危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长1.1-1.3米，体重5-7千克。唯一一种生活在高原的鹤。头、颈黑色，眼后有一白斑。身体灰白色，尾部黑色。头顶裸露皮肤红色。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>青藏高原及云贵高原。繁殖于青海、西藏、四川海拔2,500-5,000米的高原湿地。越冬于云南、贵州。</p>
+    <div class="fun-fact">黑颈鹤是全世界15种鹤中最晚被发现的一种（1876年），也是唯一完全适应高原生活的鹤类。藏族人民称它为"冲冲"，视其为神圣之鸟。</div>
+  </div>
+</div>
+
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-1">国家一级</span><img src="images/毛腿雕鸮.png" alt="毛腿雕鸮" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>毛腿雕鸮</h3>
+    <div class="latin"><em>Bubo blakistoni</em></div>
+    <div class="tag-row"><span class="tag">鸮形目</span><span class="tag">鸱鸮科</span><span class="tag">IUCN: 濒危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>世界上最大的猫头鹰。体长60-72厘米，翼展1.8-1.9米，体重3-4.5千克。全身灰褐色带纵纹。耳羽簇明显。脚被浓密羽毛覆盖（适应寒带）。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>东北大兴安岭、小兴安岭、长白山的原始针叶林。中国境内极其稀少，估计不足100对。</p>
+    <div class="fun-fact">毛腿雕鸮以捕食鱼类为主，这在猫头鹰中非常罕见。它们能在完全黑暗的森林中无声飞行——特殊的羽毛边缘消除了飞行噪音。</div>
+  </div>
+</div>
+
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-1">国家一级</span><img src="images/白尾海雕.png" alt="白尾海雕" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>白尾海雕</h3>
+    <div class="latin"><em>Haliaeetus albicilla</em></div>
+    <div class="tag-row"><span class="tag">鹰形目</span><span class="tag">鹰科</span><span class="tag">IUCN: 无危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长70-90厘米，翼展2-2.5米。全身褐色，头部较浅。成鸟尾部纯白色（特征明显）。喙黄色巨大。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>东北、内蒙古、新疆的大型湖泊和沿海湿地。冬季在东部沿海越冬。</p>
+    <div class="fun-fact">白尾海雕的巢是鸟类中最大的之一——有些巢直径可达2米，重达半吨，用了几十年！</div>
+  </div>
+</div>
+
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-2">国家二级</span><img src="images/大紫胸鹦鹉.png" alt="大紫胸鹦鹉" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>大紫胸鹦鹉</h3>
+    <div class="latin"><em>Psittacula derbiana</em></div>
+    <div class="tag-row"><span class="tag">鹦形目</span><span class="tag">鹦鹉科</span><span class="tag">IUCN: 近危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长40-50厘米。雄性上嘴红色、下嘴黑色，头部蓝灰色，胸部紫色。雌性全嘴黑色。中国体型最大的本土鹦鹉。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>西藏东南部、云南西北部、四川西部的山地森林。</p>
+    <div class="fun-fact">你在中国野外看到的绝大多数鹦鹉都是逃逸的宠物——但大紫胸鹦鹉是中国本土的野生鹦鹉，是真正的"国货"！</div>
+  </div>
+</div>
+
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-1">国家一级</span><img src="images/褐马鸡.png" alt="褐马鸡" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>褐马鸡</h3>
+    <div class="latin"><em>Crossoptilon mantchuricum</em></div>
+    <div class="tag-row"><span class="tag">鸡形目</span><span class="tag">雉科</span><span class="tag">中国特有</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长83-110厘米。全身深褐色，面部红色裸皮，耳后有白色簇羽上翘如角。尾羽蓬松上翘。中国特有珍禽，山西省省鸟。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>山西、河北、北京西部海拔1,100-2,600米的山地森林。</p>
+    <div class="fun-fact">古人用褐马鸡的尾羽装饰武将的头盔，称为"鹖冠"——这种传统可追溯到战国时期。褐马鸡因此自古以来就是勇猛善战的象征。</div>
+  </div>
+</div>
+
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-2">国家二级</span><img src="images/鸳鸯.png" alt="鸳鸯" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>鸳鸯</h3>
+    <div class="latin"><em>Aix galericulata</em></div>
+    <div class="tag-row"><span class="tag">雁形目</span><span class="tag">鸭科</span><span class="tag">IUCN: 无危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长40-50厘米。雄鸟极其华丽：橙色帆状三级飞羽，紫绿色头部，白色眉纹，栗色胸部。雌鸟灰褐色，有白色眼纹。</p>
+    <div class="fun-fact">鸳鸯在中国文化中象征忠贞爱情，但事实上它们并非终身配偶——每年繁殖季都会更换伴侣！不过它们确实会成双成对地一起活动，所以"只羡鸳鸯不羡仙"也不完全错。</div>
+  </div>
+</div>
+
+</div><!-- end species-grid -->
+
+<div class="chapter-footer">
+  <div class="protection-box">
+    <p>中国有1,400多种鸟类，其中约100种为中国特有或主要分布在中国。鸟类是生态系统健康的"晴雨表"——鸟类的减少往往预示着环境问题的出现。保护鸟类栖息地（湿地、森林、草原）是最有效的保护方式。</p>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!--  第三章：爬行动物                         -->
+<!-- ══════════════════════════════════════════ -->
+<div class="chapter" id="ch3">
+<div class="chapter-header">
+  <h2>🦎 第三章 · 爬行动物</h2>
+  <p class="desc">中国拥有约460种爬行动物，其中包括中国特有的扬子鳄和多种珍稀龟鳖类、蛇类和蜥蜴类。</p>
+</div>
+
+<div class="species-grid">
+
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-1">国家一级</span><img src="images/扬子鳄.png" alt="扬子鳄" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>扬子鳄</h3>
+    <div class="latin"><em>Alligator sinensis</em></div>
+    <div class="tag-row"><span class="tag">鳄目</span><span class="tag">鼍科</span><span class="tag">IUCN: 极危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长1.5-2.1米，体重约36-45千克。世界上体型最小的鳄鱼之一。暗褐色，有黄色横纹。吻部较短宽。与美洲短吻鳄是现存仅有的两种短吻鳄。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>历史上分布于长江中下游流域。野生种群现仅存于安徽宣城、浙江长兴等极少数区域。野生个体约200只。</p>
+    <div class="section-label">🌿 生活习性</div>
+    <p>在河湖边挖洞栖息，洞道复杂可长达数十米。以鱼、虾、蛙、水鸟为食。冬季在洞中冬眠。每年7-8月繁殖，雌鳄用植物筑巢。</p>
+    <div class="section-label">🛡️ 保护故事</div>
+    <p>20世纪70年代野生扬子鳄不足200只。安徽宣城建立了扬子鳄国家级自然保护区，人工繁育取得成功。目前人工种群超过15,000只，但野生种群恢复仍需努力。</p>
+    <div class="fun-fact">扬子鳄是恐龙时代的活化石，已在长江流域生活了超过2亿年。当地人俗称"土龙"或"猪婆龙"。它们性情温和，极少攻击人类。</div>
+  </div>
+</div>
+
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-2">国家二级</span><img src="images/缅甸蟒.png" alt="缅甸蟒" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>缅甸蟒</h3>
+    <div class="latin"><em>Python bivittatus</em></div>
+    <div class="tag-row"><span class="tag">有鳞目</span><span class="tag">蟒科</span><span class="tag">IUCN: 易危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>中国最大的蛇类。体长3-7米，体重可达90千克。棕褐色，背部有大块深色鞍状斑纹。头部有箭头形斑纹。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>云南南部、广西、广东、福建、海南的热带和亚热带森林。喜近水环境。</p>
+    <div class="section-label">🌿 生活习性</div>
+    <p>以哺乳动物和鸟类为食，用缠绕方式使猎物窒息。善于游泳。卵生，雌蛇盘绕护卵并可通过肌肉颤抖产生热量帮助孵化。</p>
+    <div class="fun-fact">蟒蛇雌性会"抱蛋"——用身体盘绕卵堆并通过肌肉收缩产生热量，这在所有爬行动物中是极其罕见的行为！</div>
+  </div>
+</div>
+
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-2">国家二级</span><img src="images/眼镜王蛇.png" alt="眼镜王蛇" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>眼镜王蛇</h3>
+    <div class="latin"><em>Ophiophagus hannah</em></div>
+    <div class="tag-row"><span class="tag">有鳞目</span><span class="tag">眼镜蛇科</span><span class="tag">IUCN: 易危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长3-5.5米，世界最长的毒蛇。橄榄绿色或棕褐色，有浅色横纹。颈部可扩张成兜帽状。幼蛇黑色有白色V形纹。</p>
+    <div class="fun-fact">眼镜王蛇的"眼镜"之名来自它颈部扩张时的斑纹——但更酷的是，它主要吃其他蛇类（包括毒蛇）！它的学名Ophiophagus就是"食蛇者"的意思。</div>
+  </div>
+</div>
+
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-1">国家一级</span><img src="images/绿海龟.png" alt="绿海龟" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>绿海龟</h3>
+    <div class="latin"><em>Chelonia mydas</em></div>
+    <div class="tag-row"><span class="tag">龟鳖目</span><span class="tag">海龟科</span><span class="tag">IUCN: 濒危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长80-120厘米，体重100-200千克。背甲橄榄绿色或棕褐色，有放射状花纹。头部较小，不能缩入壳内。四肢变成鳍状，善于游泳。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>中国南海诸岛海域，特别是西沙群岛、南沙群岛是重要产卵地。广东、海南、台湾沿海也有分布。</p>
+    <div class="section-label">🌿 生活习性</div>
+    <p>以海草和藻类为主食。雌龟每隔2-4年回到出生地沙滩产卵，每窝约100枚。幼龟孵化后爬向大海，存活率极低（约千分之一）。</p>
+    <div class="fun-fact">雌性绿海龟会跨越数千公里回到自己出生的沙滩产卵——科学家至今不完全清楚它们是如何导航的，推测是依赖地球磁场！</div>
+  </div>
+</div>
+
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-2">国家二级</span><img src="images/大壁虎（蛤蚧）.png" alt="大壁虎（蛤蚧）" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>大壁虎（蛤蚧）</h3>
+    <div class="latin"><em>Gekko gecko</em></div>
+    <div class="tag-row"><span class="tag">有鳞目</span><span class="tag">壁虎科</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长30-35厘米，是中国最大的壁虎。蓝灰色或紫灰色，有橙红色斑点。趾端有大量微观刚毛，可在光滑表面爬行。叫声响亮"ge-cko"。</p>
+    <div class="fun-fact">壁虎的脚底有数百万根纳米级的刚毛，利用范德华力可以吸附在任何表面——这是人类至今无法完美复制的自然科技！</div>
+  </div>
+</div>
+
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-2">国家二级</span><img src="images/圆鼻巨蜥.png" alt="圆鼻巨蜥" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>圆鼻巨蜥</h3>
+    <div class="latin"><em>Varanus salvator</em></div>
+    <div class="tag-row"><span class="tag">有鳞目</span><span class="tag">巨蜥科</span><span class="tag">IUCN: 无危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长可达2-3米，体重25-50千克。中国最大的蜥蜴。全身黑色带黄色斑点。舌长分叉，善于游泳和爬树。</p>
+    <div class="fun-fact">巨蜥是科莫多龙的近亲！它们会用分叉的舌头"品尝"空气，追踪几公里外的猎物气味。</div>
+  </div>
+</div>
+
+</div><!-- end species-grid -->
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!--  第四章：两栖动物                         -->
+<!-- ══════════════════════════════════════════ -->
+<div class="chapter" id="ch4">
+<div class="chapter-header">
+  <h2>🐸 第四章 · 两栖动物</h2>
+  <p class="desc">中国两栖动物种类丰富，特有性极高。但由于栖息地破坏、水污染和气候变化，两栖动物是全球受威胁最严重的脊椎动物类群。</p>
+</div>
+
+<div class="species-grid">
+
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-2">国家二级</span><img src="images/大鲵（娃娃鱼）.png" alt="大鲵（娃娃鱼）" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>大鲵（娃娃鱼）</h3>
+    <div class="latin"><em>Andrias davidianus</em></div>
+    <div class="tag-row"><span class="tag">有尾目</span><span class="tag">隐鳃鲵科</span><span class="tag">IUCN: 极危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长可达1-1.8米，体重可达50千克以上。世界上最大的两栖动物。棕褐色，皮肤光滑有褶皱。头大而扁，眼小。叫声似婴儿啼哭，故名"娃娃鱼"。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>中国中部和南部的清澈山溪中。长江、黄河、珠江流域均有分布。</p>
+    <div class="section-label">🌿 生活习性</div>
+    <p>完全水栖，以鱼、虾、蛙、昆虫为食。白天隐藏于石缝中，夜间出来觅食。新陈代谢极慢，可数月不进食。寿命可达50-60年。</p>
+    <div class="fun-fact">大鲵是恐龙时代的活化石，在地球上已存在1.65亿年！野生大鲵急剧减少的主要原因不是天敌——而是被人类吃掉。</div>
+  </div>
+</div>
+
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-2">国家二级</span><img src="images/峨眉髭蟾.png" alt="峨眉髭蟾" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>峨眉髭蟾</h3>
+    <div class="latin"><em>Vibrissaphora boringii</em></div>
+    <div class="tag-row"><span class="tag">无尾目</span><span class="tag">角蟾科</span><span class="tag">中国特有</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长7-9厘米。背面紫褐色，散布黑斑。最奇特的是雄性在繁殖期上唇会长出10-16根黑色角质刺（"髭"），像胡子一样！</p>
+    <div class="fun-fact">峨眉髭蟾的雄性在求偶季节会长出"胡子"——这在蛙类中极其罕见！这些角质刺可能用于与其他雄性搏斗争夺配偶。</div>
+  </div>
+</div>
+
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-2">国家二级</span><img src="images/镇海棘螈.png" alt="镇海棘螈" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>镇海棘螈</h3>
+    <div class="latin"><em>Echinotriton chinhaiensis</em></div>
+    <div class="tag-row"><span class="tag">有尾目</span><span class="tag">蝾螈科</span><span class="tag">IUCN: 极危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长12-15厘米。背部黑褐色，腹部有橘红色斑纹。皮肤粗糙有颗粒状突起。四肢粗短。仅分布于浙江宁波镇海区极小范围。</p>
+    <div class="fun-fact">镇海棘螈的分布范围是全球所有两栖动物中最小的之一——仅约0.1平方公里！整个物种的存亡就系于这一小片土地。</div>
+  </div>
+</div>
+
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-2">国家二级</span><img src="images/虎纹蛙.png" alt="虎纹蛙" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>虎纹蛙</h3>
+    <div class="latin"><em>Hoplobatrachus chinensis</em></div>
+    <div class="tag-row"><span class="tag">无尾目</span><span class="tag">叉舌蛙科</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长8-12厘米。背面绿色或灰绿色，有不规则深色斑纹（似虎纹）。体型壮硕，后肢粗壮。中国南方常见的大型蛙类。</p>
+    <div class="fun-fact">虎纹蛙是少数会主动捕食小型脊椎动物（如其他蛙类、小蛇）的蛙类之一。它们是稻田生态系统的重要成员，大量捕食农业害虫。</div>
+  </div>
+</div>
+
+</div><!-- end species-grid -->
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!--  第五章：鱼类                             -->
+<!-- ══════════════════════════════════════════ -->
+<div class="chapter" id="ch5">
+<div class="chapter-header">
+  <h2>🐟 第五章 · 鱼类</h2>
+  <p class="desc">中国淡水鱼类超过1,000种，居世界首位。长江流域更是全球淡水生物多样性最丰富的区域之一。然而水利工程、过度捕捞和水污染正严重威胁着这些水生生命。</p>
+</div>
+
+<div class="species-grid">
+
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-1">国家一级</span><img src="images/中华鲟.png" alt="中华鲟" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>中华鲟</h3>
+    <div class="latin"><em>Acipenser sinensis</em></div>
+    <div class="tag-row"><span class="tag">鲟形目</span><span class="tag">鲟科</span><span class="tag">IUCN: 极危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长可达2-5米，体重可达200-500千克。体呈梭形，背部有5行骨板。吻部长而尖。口位于头部腹面。是长江中最大的鱼类之一。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>长江干流及东海沿岸。历史上可上溯到金沙江产卵，葛洲坝截断洄游通道后，产卵场仅剩葛洲坝下游极小区域。</p>
+    <div class="section-label">🌿 生活习性</div>
+    <p>洄游鱼类，在长江上游产卵，幼鱼顺流到海洋生长，性成熟后（约10-15年）返回长江繁殖。以底栖无脊椎动物和小鱼为食。</p>
+    <div class="section-label">🛡️ 保护故事</div>
+    <p>被称为"长江鱼王"，已在地球上生存1.4亿年。2013年后未再发现野生中华鲟自然繁殖。2022年长江全流域十年禁渔令实施，希望给中华鲟最后的生存机会。</p>
+    <div class="fun-fact">中华鲟的卵是制作顶级鱼子酱的原料——但一只雌性中华鲟要10-15年才能性成熟，过度捕捞让它几乎没有机会繁殖下一代。</div>
+  </div>
+</div>
+
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-1">国家一级</span><img src="images/白鲟.png" alt="白鲟" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>白鲟</h3>
+    <div class="latin"><em>Psephurus gladius</em></div>
+    <div class="tag-row"><span class="tag">鲟形目</span><span class="tag">匙吻鲟科</span><span class="tag">IUCN: 灭绝</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长可达7米，体重可达500千克以上。中国最大的淡水鱼。吻部极长，呈剑状。体无鳞，背部浅灰色。曾经是长江生态系统的顶级掠食者。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>历史上分布于长江干流。2003年最后一次目击，2022年被IUCN正式宣布灭绝。</p>
+    <div class="fun-fact">白鲟被称为"中国淡水鱼之王"。它的灭绝是2003年之后人类见证的又一个物种消逝——距离我们最后一次见到活的白鲟，才过去20多年。</div>
+  </div>
+</div>
+
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-2">国家二级</span><img src="images/胭脂鱼.png" alt="胭脂鱼" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>胭脂鱼</h3>
+    <div class="latin"><em>Myxocyprinus asiaticus</em></div>
+    <div class="tag-row"><span class="tag">鲤形目</span><span class="tag">亚口鱼科</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长可达1米。成年鱼体色为红棕色，故名"胭脂"。幼鱼体色完全不同——黑白相间条纹，背鳍极大如帆，被称为"一帆风顺"。幼成体差异巨大。</p>
+    <div class="fun-fact">胭脂鱼是钓鱼爱好者梦寐以求的"梦幻鱼种"——它们力气极大。更重要的是，胭脂鱼是亚口鱼科在亚洲唯一的代表，其他所有成员都在北美洲！</div>
+  </div>
+</div>
+
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-1">国家一级</span><img src="images/黄唇鱼.png" alt="黄唇鱼" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>黄唇鱼</h3>
+    <div class="latin"><em>Bahaba taipingensis</em></div>
+    <div class="tag-row"><span class="tag">鲈形目</span><span class="tag">石首鱼科</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长可达2米，体重可达100千克。灰黄色，鳍为橙黄色。以其巨大的鳔（鱼鳔）闻名——鳔可重达1千克以上。</p>
+    <div class="fun-fact">黄唇鱼的鱼鳔被认为是极品花胶，价格堪比黄金——这也是它被盗猎至濒危的直接原因。保护黄唇鱼，就是拒绝消费天价花胶。</div>
+  </div>
+</div>
+
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-2">国家二级</span><img src="images/青海湖裸鲤（湟鱼）.png" alt="青海湖裸鲤（湟鱼）" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>青海湖裸鲤（湟鱼）</h3>
+    <div class="latin"><em>Gymnocypris przewalskii</em></div>
+    <div class="tag-row"><span class="tag">鲤形目</span><span class="tag">鲤科</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长30-50厘米。体近裸露，仅肩部和臀鳍基部有少数鳞片。背部黄褐色，腹部浅色。适应青海湖的高盐碱环境。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>仅分布于青海湖及其入湖河流。每年夏季洄游到淡水河流产卵，形成壮观的"半河清水半河鱼"景象。</p>
+    <div class="fun-fact">湟鱼每年洄游产卵的景象被称为"鲤鱼跳龙门"的现实版——成千上万的湟鱼逆流而上，跃过层层障碍。青海多年封湖育鱼使种群逐步恢复。</div>
+  </div>
+</div>
+
+</div><!-- end species-grid -->
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!--  第六章：昆虫与无脊椎动物                  -->
+<!-- ══════════════════════════════════════════ -->
+<div class="chapter" id="ch6">
+<div class="chapter-header">
+  <h2>🦋 第六章 · 昆虫与无脊椎动物</h2>
+  <p class="desc">昆虫是地球上种类最多的动物类群。本章精选最具代表性的中国珍稀昆虫及部分受保护的无脊椎动物，展现这个"微观世界"的惊人美丽。</p>
+</div>
+
+<div class="species-grid">
+
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-1">国家一级</span><img src="images/金斑喙凤蝶.png" alt="金斑喙凤蝶" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>金斑喙凤蝶</h3>
+    <div class="latin"><em>Teinopalpus aureus</em></div>
+    <div class="tag-row"><span class="tag">鳞翅目</span><span class="tag">凤蝶科</span><span class="tag">IUCN: 数据不足</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>翼展8-10厘米。世界上最珍稀的蝴蝶之一。前翅黑色带绿色脉纹，后翅大面积金黄色，中央有黑色斑纹。飞行姿态极其优美。</p>
+    <div class="section-label">🗺️ 分布区域</div>
+    <p>福建、广东、广西、海南等南方省份的亚热带山林。分布极为零散，极难见到。</p>
+    <div class="fun-fact">金斑喙凤蝶被称为"蝴蝶中的大熊猫"，是中国唯一的国家一级保护昆虫。一只标本在国际市场上曾被炒到数万美元——这也成为它被盗猎的重要原因。</div>
+  </div>
+</div>
+
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-2">国家二级</span><img src="images/中华虎凤蝶.png" alt="中华虎凤蝶" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>中华虎凤蝶</h3>
+    <div class="latin"><em>Luehdorfia chinensis</em></div>
+    <div class="tag-row"><span class="tag">鳞翅目</span><span class="tag">凤蝶科</span><span class="tag">中国特有</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>翼展4.5-5.5厘米。翅面黄色，有老虎斑纹般的黑色横带。后翅有红色和蓝色斑点。每年仅在早春出现约20天。</p>
+    <div class="fun-fact">中华虎凤蝶被称为"惊蛰蝶"——每年惊蛰节气前后羽化，是一年中最早出现的蝴蝶之一。它们一年中只有短短两三周的时间完成求偶、交配和产卵。</div>
+  </div>
+</div>
+
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-2">国家二级</span><img src="images/阳彩臂金龟.png" alt="阳彩臂金龟" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>阳彩臂金龟</h3>
+    <div class="latin"><em>Cheirotonus gestroi</em></div>
+    <div class="tag-row"><span class="tag">鞘翅目</span><span class="tag">臂金龟科</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长5-8厘米。中国体型最大的甲虫之一。全身墨绿色带强烈金属光泽。雄性前足极长（因此得名"臂金龟"），超出身体长度。鞘翅上有细密刻点。</p>
+    <div class="fun-fact">阳彩臂金龟曾被认为已经灭绝——直到1982年在中国重新被发现！这种"死而复生"的甲虫现在是昆虫收藏界的传奇。</div>
+  </div>
+</div>
+
+<div class="species-card">
+  <div class="species-img"><span class="level-badge level-2">国家二级</span><img src="images/中国鲎.png" alt="中国鲎" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="species-body">
+    <h3>中国鲎</h3>
+    <div class="latin"><em>Tachypleus tridentatus</em></div>
+    <div class="tag-row"><span class="tag">剑尾目</span><span class="tag">鲎科</span><span class="tag">IUCN: 濒危</span></div>
+    <div class="section-label">📝 外貌特征</div>
+    <p>体长可达60厘米。外形似马蹄，背甲坚硬。有长尾剑。血液含铜离子呈蓝色。已在地球上存在4.5亿年，比恐龙还古老。</p>
+    <div class="fun-fact">鲎的蓝色血液在医学上非常重要——可以用来检测药品和医疗器械中的细菌内毒素。每一剂疫苗的安全检测可能都用到了鲎血。保护鲎就是保护人类自己的健康！</div>
+  </div>
+</div>
+
+</div><!-- end species-grid -->
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!--  第七章：野生动物保护                      -->
+<!-- ══════════════════════════════════════════ -->
+<div class="chapter" id="ch7">
+<div class="chapter-header">
+  <h2>🛡️ 第七章 · 中国野生动物保护</h2>
+  <p class="desc">了解保护体系，成为野生动物的守护者。</p>
+</div>
+
+<div style="max-width:1000px;margin:0 auto;padding:0 24px">
+
+<div class="species-card" style="margin-bottom:24px">
+  <div class="species-body">
+    <h3>🏞️ 中国自然保护区体系</h3>
+    <p>截至2023年，中国已建立各级各类自然保护地超过<strong>1.18万个</strong>，占陆域国土面积的<strong>18%</strong>。其中包括：</p>
+    <ul style="padding-left:20px;line-height:2.2;margin-top:8px">
+      <li><strong>国家公园（5个首批）</strong>：三江源、大熊猫、东北虎豹、海南热带雨林、武夷山</li>
+      <li><strong>国家级自然保护区</strong>：474个，如卧龙、可可西里、扎龙等</li>
+      <li><strong>国家湿地公园</strong>：899个</li>
+    </ul>
+  </div>
+</div>
+
+<div class="species-card" style="margin-bottom:24px">
+  <div class="species-body">
+    <h3>📊 濒危等级体系</h3>
+    <table style="width:100%;border-collapse:collapse;margin-top:8px">
+      <tr style="background:#f8faf8"><td style="padding:8px;font-weight:700;color:#c1121f">EX 灭绝</td><td style="padding:8px">最后一个个体已死亡。如：白鲟（2022年宣布）</td></tr>
+      <tr><td style="padding:8px;font-weight:700;color:#c1121f">EW 野外灭绝</td><td style="padding:8px">仅有人工饲养种群。如：麋鹿（已重引入）</td></tr>
+      <tr style="background:#f8faf8"><td style="padding:8px;font-weight:700;color:#c1121f">CR 极危</td><td style="padding:8px">野外灭绝风险极高。如：中华穿山甲、扬子鳄</td></tr>
+      <tr><td style="padding:8px;font-weight:700;color:#e07b39">EN 濒危</td><td style="padding:8px">野外灭绝风险很高。如：大熊猫、东北虎、雪豹</td></tr>
+      <tr style="background:#f8faf8"><td style="padding:8px;font-weight:700;color:#e07b39">VU 易危</td><td style="padding:8px">野外灭绝风险较高。如：亚洲象、云豹</td></tr>
+      <tr><td style="padding:8px;font-weight:700">NT 近危</td><td style="padding:8px">未来可能面临威胁。如：藏羚羊、猞猁</td></tr>
+      <tr style="background:#f8faf8"><td style="padding:8px;font-weight:700;color:#2d6a4f">LC 无危</td><td style="padding:8px">目前没有灭绝风险。如：狼、野猪</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="species-card" style="margin-bottom:24px">
+  <div class="species-body">
+    <h3>📜 主要保护法律法规</h3>
+    <ul style="padding-left:20px;line-height:2.2;margin-top:8px">
+      <li><strong>《中华人民共和国野生动物保护法》</strong>（1989年实施，多次修订）</li>
+      <li><strong>《国家重点保护野生动物名录》</strong>（2021年最新版，含980种）</li>
+      <li><strong>《濒危野生动植物种国际贸易公约》CITES</strong>（中国1981年加入）</li>
+      <li><strong>长江十年禁渔</strong>（2021-2030年）</li>
+      <li><strong>全面禁止象牙贸易</strong>（2018年起）</li>
+      <li><strong>穿山甲鳞片从药典移除</strong>（2020年）</li>
+    </ul>
+  </div>
+</div>
+
+<div class="species-card" style="margin-bottom:24px;background:linear-gradient(135deg,#e8f5e9,#fff)">
+  <div class="species-body">
+    <h3>💪 我们每个人能做什么</h3>
+    <ol style="padding-left:20px;line-height:2.4;margin-top:8px">
+      <li><strong>拒绝消费野生动物制品</strong>——不买象牙、犀角、穿山甲鳞片、虎骨制品</li>
+      <li><strong>拒绝食用野生动物</strong>——没有买卖就没有杀害</li>
+      <li><strong>保护栖息地</strong>——不乱丢垃圾、不破坏植被、节约用水</li>
+      <li><strong>做自然的观察者</strong>——观鸟、拍照，但不要打扰动物</li>
+      <li><strong>传播保护理念</strong>——把你知道的动物故事讲给身边的人听</li>
+      <li><strong>支持保护组织</strong>——关注WWF、山水自然保护中心、猫盟等</li>
+      <li><strong>低碳生活</strong>——减少碳排放就是保护野生动物栖息地</li>
+    </ol>
+    <p style="margin-top:16px;font-weight:700;color:var(--green);font-size:18px">🌍 每一个物种的消失，都是地球生命之书被撕掉的一页。保护它们，就是保护我们共同的未来。</p>
+  </div>
+</div>
+
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!--  附录                                      -->
+<!-- ══════════════════════════════════════════ -->
+<div class="chapter" id="appendix">
+<div class="chapter-header">
+  <h2>📚 附录</h2>
+</div>
+<div style="max-width:800px;margin:0 auto;padding:0 24px 60px">
+
+<div class="species-card" style="margin-bottom:16px">
+  <div class="species-body">
+    <h3>术语表</h3>
+    <table style="width:100%">
+      <tr><td style="padding:6px;font-weight:700">IUCN</td><td style="padding:6px">世界自然保护联盟，发布全球物种红色名录</td></tr>
+      <tr><td style="padding:6px;font-weight:700">CITES</td><td style="padding:6px">濒危野生动植物种国际贸易公约</td></tr>
+      <tr><td style="padding:6px;font-weight:700">孑遗物种</td><td style="padding:6px">远古时期广泛分布、现仅存于狭小区域的古老物种</td></tr>
+      <tr><td style="padding:6px;font-weight:700">旗舰物种</td><td style="padding:6px">能引起公众关注、带动整体生态保护的明星物种</td></tr>
+      <tr><td style="padding:6px;font-weight:700">功能性灭绝</td><td style="padding:6px">种群数量不足以维持自然繁殖的状态</td></tr>
+    </table>
+  </div>
+</div>
+
+<p style="text-align:center;color:var(--sub);margin-top:40px;font-size:14px">
+  数据来源：《国家重点保护野生动物名录》（2021年）、IUCN Red List (2024)<br>
+  本书为科普读物，非学术出版物。<br>
+  © 2026 中国野生动物百科全书
+</p>
+</div>
+</div>
+
+<script>
+// Floating TOC navigation
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('nav.toc-fixed');
+  if (window.scrollY > 300) nav.style.display = 'flex';
+  else nav.style.display = 'none';
+});
+</script>
+
+</body>
+</html>
